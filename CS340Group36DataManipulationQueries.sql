@@ -28,7 +28,7 @@ WHERE lineID = @lineID_of_row_of_button;
 /* Update the line */
 
 UPDATE AssemblyLines
-SET lineID = @lineID_from_form, lineName = @lineName_from_form, department = @department_from_form
+SET lineID = @lineName_from_form, department = @department_from_form
 WHERE lineID = @lineID_of_row_of_button;
 
 /* ---------------------------------------------------
@@ -65,10 +65,14 @@ WHERE TeamMembers.teamMemberID = @teamMemberID_from_row_or_button;
 /* Edit Team Member */
 
 UPDATE TeamMembers
-SET firstName = @fistName_from_form, lastName = @lastName_from_form,
+SET firstName = @firstName_from_form, lastName = @lastName_from_form,
     homeLineID = @homeLineID_from_dropdown, employmentStatus = @employmentStatus_from_dropdown
 WHERE teamMemberID = @teamMemberID_of_row_of_button;
 
+/* Line Dropdown for position add/edit */
+
+SELECT lineID, lineName
+FROM AssemblyLines;
 /* ---------------------------------------------------
 Positions SQL
 -----------------------------------------------------*/
@@ -87,7 +91,7 @@ SELECT skillID, skillName FROM Skills;
 /* Add new Position */
 
 INSERT INTO Positions (positionName, lineID, requiredStaff, qualifyingSkillID)
-VALUES (@positionName_from_form, lineID_from_dropdown, requiredStaff_from_form, qualifyingSkillID_from_dropdown);
+VALUES (@positionName_from_form, @lineID_from_dropdown, @requiredStaff_from_form, @qualifyingSkillID_from_dropdown);
 
 /* Delete Position */
 
@@ -106,7 +110,7 @@ WHERE positionID = @positionID_from_row_of_button;
 
 UPDATE Positions
 SET positionName = @positionName_from_form, lineID = @lineID_from_dropdown,
-    requiredStaff = @number_from_form, qualifyingSkillID = @qualifyingSkillID_from_dropdown
+    requiredStaff = @requiredStaff_from_form, qualifyingSkillID = @qualifyingSkillID_from_dropdown
 WHERE positionID = @positionID_from_row_of_button;
 
 /* ---------------------------------------------------
@@ -130,7 +134,7 @@ WHERE skillID = @skillID_of_row_of_button;
 
 /* Edit a line pre-fill*/
 
-SELECT skillID, skillName, 
+SELECT skillID, skillName, skillDescription 
 FROM Skills
 WHERE skillID = @skillID_of_row_of_button;
 
@@ -141,7 +145,7 @@ SET skillName = @skillName_from_form, skillDescription = @skillDescription_from_
 WHERE skillID = @skillID_from_row_of_button;
 
 /* ---------------------------------------------------
-Skills SQL
+Team Member Skills SQL
 -----------------------------------------------------*/
 
 /* Read existing skill assignments */
@@ -149,12 +153,17 @@ Skills SQL
 SELECT TeamMembers.firstName, TeamMembers.lastName, Skills.skillName
 FROM TeamMembers
 INNER JOIN TeamMemberSkills ON TeamMembers.teamMemberID = Skills.teamMemberID
-INNER JOIN SKills ON TeamMemberSkills.skillID = Skills.skillID;
+INNER JOIN Skills ON TeamMemberSkills.skillID = Skills.skillID;
 
 /* Team Member dropdown */
 
 SELECT teamMemberID, firstName, lastName
 FROM TeamMembers;
+
+/* Skill dropdown */
+
+SELECT skillID, skillName
+FROM Skills;
 
 /* add new skill to TeamMember */
 
@@ -211,6 +220,14 @@ INNER JOIN Positions ON DailyAssignments.positionID = Positions.positionID;
 
 /* drop down for Schedules same as display query*/
 
+SELECT scheduleID, scheduleDate, shiftName
+FROM Schedules;
+
+/* drop down for Team Members */
+
+SELECT teamMemberID, firstName, lastName
+FROM TeamMembers;
+
 /* drop down for positions */
 
 SELECT positionID, positionName FROM Positions;
@@ -218,7 +235,7 @@ SELECT positionID, positionName FROM Positions;
 /* Insert new Daily Assignment */
 
 INSERT INTO DailyAssignments (scheduleID, teamMemberID, positionID)
-VALUES (scheduleID_from_dropdown, teamMemberID_from_dropdown, positionID_from_dropdown);
+VALUES (@scheduleID_from_dropdown, @teamMemberID_from_dropdown, @positionID_from_dropdown);
 
 /* Delete daily assignment */
 
@@ -237,5 +254,5 @@ WHERE DailyAssignments.assignmentID = @assignmentID_from_row_of_button;
 /* Update Daily Assignment */
 
 UPDATE DailyAssignments
-SET scheduleID = @scheduleID_from_dropdown, teamMemberID = teamMemberID_from_dropdown, positionID = positionID_from_dropdown
+SET scheduleID = @scheduleID_from_dropdown, teamMemberID = @teamMemberID_from_dropdown, positionID = @positionID_from_dropdown
 WHERE assignmentID = assignmentID_from_row_of_button;
