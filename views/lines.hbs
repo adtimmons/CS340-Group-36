@@ -1,0 +1,65 @@
+<section class="page-heading">
+    <h2>Lines</h2>
+    <p>Browse, add, update, and delete production lines.</p>
+</section>
+
+<section class="panel">
+    <h3>Existing Lines</h3>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Line ID</th>
+                <th>Line Name</th>
+                <th>Department</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            <tr>
+                <td>1</td>
+                <td>Line 1</td>
+                <td>Production</td>
+                <td>
+                    <button type="button">Edit</button>
+                    <button type="button" class="danger">Delete</button>
+                </td>
+            </tr>
+
+            <tr>
+                <td>2</td>
+                <td>Line 2</td>
+                <td>Production</td>
+                <td>
+                    <button type="button">Edit</button>
+                    <button type="button" class="danger">Delete</button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>
+
+<section class="panel">
+    <h3>Add a Line</h3>
+
+    <form>
+        <label for="lineName">Line name</label>
+        <input
+            type="text"
+            id="lineName"
+            name="lineName"
+            required
+        >
+
+        <label for="department">Department</label>
+        <input
+            type="text"
+            id="department"
+            name="department"
+            required
+        >
+
+        <button type="submit">Add Line</button>
+    </form>
+</section>

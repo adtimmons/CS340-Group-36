@@ -1,0 +1,85 @@
+<section class="page-heading">
+    <h2>Team Members</h2>
+    <p>Manage employee records and home-line assignments.</p>
+</section>
+
+<section class="panel">
+    <h3>Existing Team Members</h3>
+
+    <table>
+        <thead>
+            <tr>
+                <th>TM ID</th>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Home Line</th>
+                <th>Status</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            <tr>
+                <td>101</td>
+                <td>Jordan</td>
+                <td>Smith</td>
+                <td>Line 1</td>
+                <td>Active</td>
+                <td>
+                    <button type="button">Edit</button>
+                    <button type="button" class="danger">Delete</button>
+                </td>
+            </tr>
+
+            <tr>
+                <td>102</td>
+                <td>Casey</td>
+                <td>Brown</td>
+                <td>Line 2</td>
+                <td>Active</td>
+                <td>
+                    <button type="button">Edit</button>
+                    <button type="button" class="danger">Delete</button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>
+
+<section class="panel">
+    <h3>Add a Team Member</h3>
+
+    <form>
+        <label for="firstName">First name</label>
+        <input
+            type="text"
+            id="firstName"
+            name="firstName"
+            required
+        >
+
+        <label for="lastName">Last name</label>
+        <input
+            type="text"
+            id="lastName"
+            name="lastName"
+            required
+        >
+
+        <label for="homeLineID">Home line</label>
+        <select id="homeLineID" name="homeLineID" required>
+            <option value="">Select a line</option>
+            <option value="1">Line 1</option>
+            <option value="2">Line 2</option>
+        </select>
+
+        <label for="employmentStatus">Employment status</label>
+        <select id="employmentStatus" name="employmentStatus" required>
+            <option value="Active">Active</option>
+            <option value="Leave">Leave</option>
+            <option value="Inactive">Inactive</option>
+        </select>
+
+        <button type="submit">Add Team Member</button>
+    </form>
+</section>

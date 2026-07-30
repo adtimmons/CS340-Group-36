@@ -1,0 +1,55 @@
+<section class="page-heading">
+    <h2>Schedules</h2>
+    <p>Manage production dates and shifts.</p>
+</section>
+
+<section class="panel">
+    <h3>Existing Schedules</h3>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Schedule ID</th>
+                <th>Date</th>
+                <th>Shift</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            <tr>
+                <td>1</td>
+                <td>2026-07-30</td>
+                <td>Day</td>
+                <td>
+                    <button type="button">Edit</button>
+                    <button type="button" class="danger">Delete</button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>
+
+<section class="panel">
+    <h3>Add a Schedule</h3>
+
+    <form>
+        <label for="scheduleDate">Schedule date</label>
+        <input
+            type="date"
+            id="scheduleDate"
+            name="scheduleDate"
+            required
+        >
+
+        <label for="shiftName">Shift</label>
+        <select id="shiftName" name="shiftName" required>
+            <option value="">Select a shift</option>
+            <option value="Day">Day</option>
+            <option value="Evening">Evening</option>
+            <option value="Night">Night</option>
+        </select>
+
+        <button type="submit">Add Schedule</button>
+    </form>
+</section>

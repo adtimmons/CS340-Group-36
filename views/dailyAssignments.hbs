@@ -1,0 +1,67 @@
+<section class="page-heading">
+    <h2>Daily Assignments</h2>
+
+    <p>
+        Assign team members to positions for a specific production
+        schedule.
+    </p>
+</section>
+
+<section class="panel">
+    <h3>Existing Daily Assignments</h3>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Assignment ID</th>
+                <th>Schedule</th>
+                <th>Team Member</th>
+                <th>Position</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            <tr>
+                <td>1</td>
+                <td>July 30, 2026 — Day</td>
+                <td>Jordan Smith</td>
+                <td>Line 1 — Packer</td>
+                <td>
+                    <button type="button">Edit</button>
+                    <button type="button" class="danger">Delete</button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>
+
+<section class="panel">
+    <h3>Add a Daily Assignment</h3>
+
+    <form>
+        <label for="scheduleID">Schedule</label>
+        <select id="scheduleID" name="scheduleID" required>
+            <option value="">Select a schedule</option>
+            <option value="1">July 30, 2026 — Day</option>
+            <option value="2">July 30, 2026 — Night</option>
+        </select>
+
+        <label for="teamMemberID">Team member</label>
+        <select id="teamMemberID" name="teamMemberID" required>
+            <option value="">Select a team member</option>
+            <option value="101">Jordan Smith</option>
+            <option value="102">Casey Brown</option>
+        </select>
+
+        <label for="positionID">Position</label>
+        <select id="positionID" name="positionID" required>
+            <option value="">Select a position</option>
+            <option value="1">Line 1 — Packer</option>
+            <option value="2">Line 1 — Scaler</option>
+            <option value="3">Line 2 — Packer</option>
+        </select>
+
+        <button type="submit">Add Assignment</button>
+    </form>
+</section>

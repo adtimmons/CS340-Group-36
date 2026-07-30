@@ -1,0 +1,54 @@
+<section class="page-heading">
+    <h2>Skills</h2>
+    <p>Manage production skills and qualifications.</p>
+</section>
+
+<section class="panel">
+    <h3>Existing Skills</h3>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Skill ID</th>
+                <th>Skill Name</th>
+                <th>Description</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            <tr>
+                <td>1</td>
+                <td>Packer</td>
+                <td>Qualified to work as a production packer.</td>
+                <td>
+                    <button type="button">Edit</button>
+                    <button type="button" class="danger">Delete</button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>
+
+<section class="panel">
+    <h3>Add a Skill</h3>
+
+    <form>
+        <label for="skillName">Skill name</label>
+        <input
+            type="text"
+            id="skillName"
+            name="skillName"
+            required
+        >
+
+        <label for="skillDescription">Description</label>
+        <textarea
+            id="skillDescription"
+            name="skillDescription"
+            rows="4"
+        ></textarea>
+
+        <button type="submit">Add Skill</button>
+    </form>
+</section>
