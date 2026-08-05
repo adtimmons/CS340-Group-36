@@ -7,7 +7,7 @@
 
 DROP PROCEDURE IF EXISTS sp_db_reset;
 
-DELIMITER / /
+DELIMITER //
 
 CREATE PROCEDURE sp_db_reset()
 
@@ -165,7 +165,7 @@ BEGIN
     COMMIT;
 END //
 
-DELIMITER;
+DELIMITER ;
 
 -- ---------------------------------------
 -- DELETE Schedule row
@@ -173,7 +173,7 @@ DELIMITER;
 
 DROP PROCEDURE IF EXISTS sp_delete_schedule;
 
-DELIMITER / /
+DELIMITER //
 
 CREATE PROCEDURE sp_delete_schedule(IN input_ID INT)
 BEGIN
@@ -182,4 +182,4 @@ BEGIN
 
 END //
 
-DELIMITER;
+DELIMITER ;

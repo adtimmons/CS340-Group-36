@@ -233,6 +233,26 @@ app.get("/schedules", async (req, res) => {
   }
 });
 
+app.post("/schedules/delete", async (req, res) => {
+  try {
+    const scheduleID = Number(req.body.scheduleID);
+
+    if (!Number.isInteger(scheduleID) || scheduleID <= 0) {
+      return res.status(400).send("Invalid schedule ID.");
+    }
+
+    await db.query("CALL sp_delete_schedule(?)", [scheduleID]);
+
+    res.redirect("/schedules");
+  } catch (error) {
+    console.error("Error deleting schedule:", error);
+    res.status(500).send(`
+      <h2>Unable to delete schedule</h2>
+      <pre>${error.message}</pre>
+    `);
+  }
+});
+
 app.get("/daily-assignments", async (req, res) => {
   try {
     const assignmentsQuery = `
@@ -293,6 +313,20 @@ app.get("/daily-assignments", async (req, res) => {
   } catch (error) {
     console.error(error);
     res.status(500).send("Error loading Daily Assignments.");
+  }
+});
+
+app.post("/reset", async (req, res) => {
+  try {
+    await db.query("CALL sp_db_reset()");
+
+    res.redirect("/");
+  } catch (error) {
+    console.error("Error resetting database:", error);
+    res.status(500).send(`
+      <h2>Unable to reset database</h2>
+      <pre>${error.message}</pre>
+    `);
   }
 });
 

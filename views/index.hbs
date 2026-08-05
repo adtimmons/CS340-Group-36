@@ -20,6 +20,24 @@
     </p>
 </section>
 
+<section class="panel">
+    <h3>Reset Database</h3>
+
+    <p>
+        Restore all tables and sample data to their original state.
+    </p>
+
+    <form action="/reset" method="POST">
+        <button
+            type="submit"
+            class="danger"
+            onclick="return confirm('Reset the entire database?');"
+        >
+            Reset Database
+        </button>
+    </form>
+</section>
+
 <section class="dashboard-summary">
     <div class="summary-card">
         <p class="summary-label">Team Members</p>

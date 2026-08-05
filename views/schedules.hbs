@@ -24,7 +24,21 @@
                 <td>{{this.shiftName}}</td>
                 <td>
                     <button type="button">Edit</button>
-                    <button type="button" class="danger">Delete</button>
+                    <form action="/schedules/delete" method="POST" style="display: inline;">
+                        <input
+                            type="hidden"
+                            name="scheduleID"
+                            value="{{this.scheduleID}}"
+                        >
+
+                        <button
+                            type="submit"
+                            class="danger"
+                            onclick="return confirm('Delete this schedule?');"
+                        >
+                            Delete
+                        </button>
+                    </form>
                 </td>
             </tr>
             {{else}}
