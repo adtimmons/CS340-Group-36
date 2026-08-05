@@ -1,20 +1,17 @@
 <section class="page-heading">
     <h2>Daily Assignments</h2>
-
-    <p>
-        Assign team members to positions for a specific production
-        schedule.
-    </p>
+    <p>Assign team members to positions for each production schedule.</p>
 </section>
 
 <section class="panel">
-    <h3>Existing Daily Assignments</h3>
+    <h3>Current Daily Assignments</h3>
 
     <table>
         <thead>
             <tr>
                 <th>Assignment ID</th>
-                <th>Schedule</th>
+                <th>Date</th>
+                <th>Shift</th>
                 <th>Team Member</th>
                 <th>Position</th>
                 <th>Actions</th>
@@ -22,16 +19,23 @@
         </thead>
 
         <tbody>
+            {{#each dailyAssignments}}
             <tr>
-                <td>1</td>
-                <td>July 30, 2026 — Day</td>
-                <td>Jordan Smith</td>
-                <td>Line 1 — Packer</td>
+                <td>{{this.assignmentID}}</td>
+                <td>{{this.scheduleDate}}</td>
+                <td>{{this.shiftName}}</td>
+                <td>{{this.teamMemberName}}</td>
+                <td>{{this.positionName}}</td>
                 <td>
                     <button type="button">Edit</button>
                     <button type="button" class="danger">Delete</button>
                 </td>
             </tr>
+            {{else}}
+            <tr>
+                <td colspan="6">No daily assignments found.</td>
+            </tr>
+            {{/each}}
         </tbody>
     </table>
 </section>
@@ -39,29 +43,44 @@
 <section class="panel">
     <h3>Add a Daily Assignment</h3>
 
-    <form>
+    <form action="/daily-assignments/add" method="POST">
+
         <label for="scheduleID">Schedule</label>
         <select id="scheduleID" name="scheduleID" required>
-            <option value="">Select a schedule</option>
-            <option value="1">July 30, 2026 — Day</option>
-            <option value="2">July 30, 2026 — Night</option>
+            <option value="">Select a Schedule</option>
+
+            {{#each schedules}}
+            <option value="{{this.scheduleID}}">
+                {{this.scheduleDate}} - {{this.shiftName}}
+            </option>
+            {{/each}}
         </select>
 
-        <label for="teamMemberID">Team member</label>
+        <label for="teamMemberID">Team Member</label>
         <select id="teamMemberID" name="teamMemberID" required>
-            <option value="">Select a team member</option>
-            <option value="101">Jordan Smith</option>
-            <option value="102">Casey Brown</option>
+            <option value="">Select a Team Member</option>
+
+            {{#each teamMembers}}
+            <option value="{{this.teamMemberID}}">
+                {{this.teamMemberName}}
+            </option>
+            {{/each}}
         </select>
 
         <label for="positionID">Position</label>
         <select id="positionID" name="positionID" required>
-            <option value="">Select a position</option>
-            <option value="1">Line 1 — Packer</option>
-            <option value="2">Line 1 — Scaler</option>
-            <option value="3">Line 2 — Packer</option>
+            <option value="">Select a Position</option>
+
+            {{#each positions}}
+            <option value="{{this.positionID}}">
+                {{this.positionName}}
+            </option>
+            {{/each}}
         </select>
 
-        <button type="submit">Add Assignment</button>
+        <button type="submit">
+            Add Assignment
+        </button>
+
     </form>
 </section>

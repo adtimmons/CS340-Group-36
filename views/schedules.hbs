@@ -1,6 +1,6 @@
 <section class="page-heading">
     <h2>Schedules</h2>
-    <p>Manage production dates and shifts.</p>
+    <p>Manage production schedules.</p>
 </section>
 
 <section class="panel">
@@ -17,15 +17,21 @@
         </thead>
 
         <tbody>
+            {{#each schedules}}
             <tr>
-                <td>1</td>
-                <td>2026-07-30</td>
-                <td>Day</td>
+                <td>{{this.scheduleID}}</td>
+                <td>{{this.scheduleDate}}</td>
+                <td>{{this.shiftName}}</td>
                 <td>
                     <button type="button">Edit</button>
                     <button type="button" class="danger">Delete</button>
                 </td>
             </tr>
+            {{else}}
+            <tr>
+                <td colspan="4">No schedules found.</td>
+            </tr>
+            {{/each}}
         </tbody>
     </table>
 </section>
@@ -33,8 +39,9 @@
 <section class="panel">
     <h3>Add a Schedule</h3>
 
-    <form>
-        <label for="scheduleDate">Schedule date</label>
+    <form action="/schedules/add" method="POST">
+
+        <label for="scheduleDate">Date</label>
         <input
             type="date"
             id="scheduleDate"
@@ -44,12 +51,15 @@
 
         <label for="shiftName">Shift</label>
         <select id="shiftName" name="shiftName" required>
-            <option value="">Select a shift</option>
-            <option value="Day">Day</option>
-            <option value="Evening">Evening</option>
-            <option value="Night">Night</option>
+            <option value="">Select a Shift</option>
+            <option value="1st Shift">1st Shift</option>
+            <option value="2nd Shift">2nd Shift</option>
+            <option value="3rd Shift">3rd Shift</option>
         </select>
 
-        <button type="submit">Add Schedule</button>
+        <button type="submit">
+            Add Schedule
+        </button>
+
     </form>
 </section>

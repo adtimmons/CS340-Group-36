@@ -19,29 +19,23 @@
         </thead>
 
         <tbody>
+            {{#each teamMembers}}
             <tr>
-                <td>101</td>
-                <td>Jordan</td>
-                <td>Smith</td>
-                <td>Line 1</td>
-                <td>Active</td>
+                <td>{{this.teamMemberID}}</td>
+                <td>{{this.firstName}}</td>
+                <td>{{this.lastName}}</td>
+                <td>{{this.lineName}}</td>
+                <td>{{this.employmentStatus}}</td>
                 <td>
                     <button type="button">Edit</button>
                     <button type="button" class="danger">Delete</button>
                 </td>
             </tr>
-
+            {{else}}
             <tr>
-                <td>102</td>
-                <td>Casey</td>
-                <td>Brown</td>
-                <td>Line 2</td>
-                <td>Active</td>
-                <td>
-                    <button type="button">Edit</button>
-                    <button type="button" class="danger">Delete</button>
-                </td>
+                <td colspan="6">No team members found.</td>
             </tr>
+            {{/each}}
         </tbody>
     </table>
 </section>
@@ -49,7 +43,7 @@
 <section class="panel">
     <h3>Add a Team Member</h3>
 
-    <form>
+    <form action="/team-members/add" method="POST">
         <label for="firstName">First name</label>
         <input
             type="text"
@@ -69,12 +63,17 @@
         <label for="homeLineID">Home line</label>
         <select id="homeLineID" name="homeLineID" required>
             <option value="">Select a line</option>
-            <option value="1">Line 1</option>
-            <option value="2">Line 2</option>
+
+            {{#each lines}}
+            <option value="{{this.lineID}}">
+                {{this.lineName}}
+            </option>
+            {{/each}}
         </select>
 
         <label for="employmentStatus">Employment status</label>
         <select id="employmentStatus" name="employmentStatus" required>
+            <option value="">Select a status</option>
             <option value="Active">Active</option>
             <option value="Leave">Leave</option>
             <option value="Inactive">Inactive</option>

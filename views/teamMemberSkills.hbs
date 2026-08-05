@@ -1,10 +1,6 @@
 <section class="page-heading">
     <h2>Team Member Skills</h2>
-
-    <p>
-        Assign skills to team members and manage the many-to-many
-        relationship.
-    </p>
+    <p>Assign skills to team members.</p>
 </section>
 
 <section class="panel">
@@ -15,20 +11,24 @@
             <tr>
                 <th>Team Member</th>
                 <th>Skill</th>
-                <th>Action</th>
+                <th>Actions</th>
             </tr>
         </thead>
 
         <tbody>
+            {{#each teamMemberSkills}}
             <tr>
-                <td>Jordan Smith</td>
-                <td>Packing</td>
+                <td>{{this.teamMemberName}}</td>
+                <td>{{this.skillName}}</td>
                 <td>
-                    <button type="button" class="danger">
-                        Remove Skill
-                    </button>
+                    <button type="button">Delete</button>
                 </td>
             </tr>
+            {{else}}
+            <tr>
+                <td colspan="3">No assignments found.</td>
+            </tr>
+            {{/each}}
         </tbody>
     </table>
 </section>
@@ -36,22 +36,33 @@
 <section class="panel">
     <h3>Assign a Skill</h3>
 
-    <form>
-        <label for="teamMemberID">Team member</label>
+    <form action="/team-member-skills/add" method="POST">
+
+        <label for="teamMemberID">Team Member</label>
         <select id="teamMemberID" name="teamMemberID" required>
-            <option value="">Select a team member</option>
-            <option value="101">Jordan Smith</option>
-            <option value="102">Casey Brown</option>
+            <option value="">Select a Team Member</option>
+
+            {{#each teamMembers}}
+            <option value="{{this.teamMemberID}}">
+                {{this.teamMemberName}}
+            </option>
+            {{/each}}
         </select>
 
         <label for="skillID">Skill</label>
         <select id="skillID" name="skillID" required>
-            <option value="">Select a skill</option>
-            <option value="1">Packing</option>
-            <option value="2">Scaling</option>
-            <option value="3">Lead</option>
+            <option value="">Select a Skill</option>
+
+            {{#each skills}}
+            <option value="{{this.skillID}}">
+                {{this.skillName}}
+            </option>
+            {{/each}}
         </select>
 
-        <button type="submit">Assign Skill</button>
+        <button type="submit">
+            Assign Skill
+        </button>
+
     </form>
 </section>

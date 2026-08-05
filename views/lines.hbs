@@ -1,5 +1,5 @@
 <section class="page-heading">
-    <h2>Lines</h2>
+    <h2>Assembly Lines</h2>
     <p>Browse, add, update, and delete production lines.</p>
 </section>
 
@@ -17,25 +17,21 @@
         </thead>
 
         <tbody>
+            {{#each lines}}
             <tr>
-                <td>1</td>
-                <td>Line 1</td>
-                <td>Production</td>
+                <td>{{this.lineID}}</td>
+                <td>{{this.lineName}}</td>
+                <td>{{this.department}}</td>
                 <td>
                     <button type="button">Edit</button>
                     <button type="button" class="danger">Delete</button>
                 </td>
             </tr>
-
+            {{else}}
             <tr>
-                <td>2</td>
-                <td>Line 2</td>
-                <td>Production</td>
-                <td>
-                    <button type="button">Edit</button>
-                    <button type="button" class="danger">Delete</button>
-                </td>
+                <td colspan="4">No assembly lines found.</td>
             </tr>
+            {{/each}}
         </tbody>
     </table>
 </section>
@@ -43,8 +39,8 @@
 <section class="panel">
     <h3>Add a Line</h3>
 
-    <form>
-        <label for="lineName">Line name</label>
+    <form action="/lines/add" method="POST">
+        <label for="lineName">Line Name</label>
         <input
             type="text"
             id="lineName"

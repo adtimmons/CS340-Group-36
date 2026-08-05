@@ -1,85 +1,92 @@
 <section class="page-heading">
-    <h2>Team Members</h2>
-    <p>Manage employee records and home-line assignments.</p>
+    <h2>Positions</h2>
+    <p>Manage production positions, staffing requirements, and qualifying skills.</p>
 </section>
 
 <section class="panel">
-    <h3>Existing Team Members</h3>
+    <h3>Existing Positions</h3>
 
     <table>
         <thead>
             <tr>
-                <th>TM ID</th>
-                <th>First Name</th>
-                <th>Last Name</th>
-                <th>Home Line</th>
-                <th>Status</th>
+                <th>Position ID</th>
+                <th>Position Name</th>
+                <th>Assembly Line</th>
+                <th>Required Staff</th>
+                <th>Qualifying Skill</th>
                 <th>Actions</th>
             </tr>
         </thead>
 
         <tbody>
+            {{#each positions}}
             <tr>
-                <td>101</td>
-                <td>Jordan</td>
-                <td>Smith</td>
-                <td>Line 1</td>
-                <td>Active</td>
+                <td>{{this.positionID}}</td>
+                <td>{{this.positionName}}</td>
+                <td>{{this.lineName}}</td>
+                <td>{{this.requiredStaff}}</td>
+                <td>{{this.skillName}}</td>
                 <td>
                     <button type="button">Edit</button>
                     <button type="button" class="danger">Delete</button>
                 </td>
             </tr>
-
+            {{else}}
             <tr>
-                <td>102</td>
-                <td>Casey</td>
-                <td>Brown</td>
-                <td>Line 2</td>
-                <td>Active</td>
-                <td>
-                    <button type="button">Edit</button>
-                    <button type="button" class="danger">Delete</button>
-                </td>
+                <td colspan="6">No positions found.</td>
             </tr>
+            {{/each}}
         </tbody>
     </table>
 </section>
 
 <section class="panel">
-    <h3>Add a Team Member</h3>
+    <h3>Add a Position</h3>
 
-    <form>
-        <label for="firstName">First name</label>
+    <form action="/positions/add" method="POST">
+        <label for="positionName">Position name</label>
         <input
             type="text"
-            id="firstName"
-            name="firstName"
+            id="positionName"
+            name="positionName"
             required
         >
 
-        <label for="lastName">Last name</label>
-        <input
-            type="text"
-            id="lastName"
-            name="lastName"
-            required
-        >
-
-        <label for="homeLineID">Home line</label>
-        <select id="homeLineID" name="homeLineID" required>
+        <label for="lineID">Assembly line</label>
+        <select id="lineID" name="lineID" required>
             <option value="">Select a line</option>
-            <option value="1">Line 1</option>
-            <option value="2">Line 2</option>
+
+            {{#each lines}}
+            <option value="{{this.lineID}}">
+                {{this.lineName}}
+            </option>
+            {{/each}}
         </select>
 
-        <label for="employmentStatus">Employment status</label>
-        <select id="employmentStatus" name="employmentStatus" required>
-            <option value="Active">Active</option>
-            <option value="Leave">Leave</option>
-            <option value="Inactive">Inactive</option>
+        <label for="requiredStaff">Required staff</label>
+        <input
+            type="number"
+            id="requiredStaff"
+            name="requiredStaff"
+            min="1"
+            required
+        >
+
+        <label for="qualifyingSkillID">Qualifying skill</label>
+        <select
+            id="qualifyingSkillID"
+            name="qualifyingSkillID"
+            required
+        >
+            <option value="">Select a skill</option>
+
+            {{#each skills}}
+            <option value="{{this.skillID}}">
+                {{this.skillName}}
+            </option>
+            {{/each}}
         </select>
 
-        <button type="submit">Add Team Member</button>
+        <button type="submit">Add Position</button>
     </form>
 </section>
