@@ -1,9 +1,9 @@
 -- PL SQL for Group 36
 -- Alysha Timmons and Jason Bluedorn
 
--- -----------------------------------------
+-- -----------------------------------------------------------------------------------------------
 -- Reset Procedure
--- -----------------------------------------
+-- -----------------------------------------------------------------------------------------------
 
 DROP PROCEDURE IF EXISTS sp_db_reset;
 
@@ -167,8 +167,155 @@ END //
 
 DELIMITER ;
 
+-- ----------------------------------------------------------------------------------------------
+-- LINES CUD FUNCTIONALITY
+-- ----------------------------------------------------------------------------------------------
+
+-------------------------------------------
+-- CREATE Lines Row
+-------------------------------------------
+
+DROP PROCEDURE IF EXISTS sp_create_assembly_line;
+
+DELIMITER //
+
+CREATE PROCEDURE sp_create_assembly_line(
+    IN input_line_name VARCHAR(255),
+    IN input_department VARCHAR(255),
+    OUT line_id INT
+)
+BEGIN
+
+    INSERT INTO AssemblyLines (lineName, department)
+    VALUES (input_line_name, input_department);
+
+    -- get ID for output
+    SELECT LAST_INSERT_ID() INTO line_id;
+    SELECT LAST_INSERT_ID() AS 'line_id';
+
+END //
+
+DELIMITER ;
+
+-- ------------------------------------------------
+-- UPDATE Lines Row
+-- ------------------------------------------------
+
+DROP PROCEDURE IF EXISTS sp_update_assembly_line;
+
+DELIMITER //
+
+CREATE PROCEDURE sp_update_assembly_line(
+    IN input_line_id INT,
+    IN input_line_name VARCHAR(255),
+    IN input_department VARCHAR(255)
+)
+BEGIN
+
+    UPDATE AssemblyLines
+    SET lineName = input_line_name, department = input_department
+    WHERE lineID = input_line_id;
+
+END //
+
+DELIMITER ;
+
+-- -----------------------------------------
+-- DELETE Lines Row
+-- -----------------------------------------
+
+DROP PROCEDURE IF EXISTS sp_delete_assembly_line;
+
+DELIMITER //
+
+CREATE PROCEDURE sp_delete_assembly_line(IN input_line_id INT)
+BEGIN
+
+    DELETE FROM AssemblyLines
+    WHERE lineID = input_line_id;
+
+END //
+
+DELIMITER ;
+
+-- ----------------------------------------------------------------------------------------------
+-- TEAM MEMBERS CUD FUNCTIONALITY
+-- ----------------------------------------------------------------------------------------------
+
+-------------------------------------------
+-- CREATE TeamMembers Row
+-------------------------------------------
+
+DROP PROCEDURE IF EXISTS sp_create_team_member;
+
+DELIMITER //
+
+CREATE PROCEDURE sp_create_team_member(
+    IN input_first_name VARCHAR(255),
+    IN input_last_name VARCHAR(255),
+    IN input_line_id INT,
+    IN input_employment_status VARCHAR(255),
+    OUT team_member_id INT
+)
+BEGIN
+
+    INSERT INTO TeamMembers (firstName, lastName, homeLineID, employmentStatus)
+    VALUES (input_first_name, input_last_name, input_line_id, input_employment_status);
+
+    -- get ID for output
+    SELECT LAST_INSERT_ID() INTO team_member_id;
+    SELECT LAST_INSERT_ID() AS 'team_member_id';
+
+END //
+
+DELIMITER ;
+
+-- -----------------------------------------
+-- UPDATE TeamMember Row
+-- -----------------------------------------
+
+DROP PROCEDURE IF EXISTS sp_update_team_member;
+
+DELIMITER //
+
+CREATE PROCEDURE sp_update_team_member(
+    IN input_tm_id INT,
+    IN input_first_name VARCHAR(255),
+    IN input_last_name VARCHAR(255),
+    IN input_line_id INT,
+    IN input_employment_status VARCHAR(255)
+)
+BEGIN
+
+    UPDATE TeamMembers
+    SET firstName = input_first_name, lastName = input_last_name,
+        homeLineID = input_line_id, employmentStatus = input_employment_status
+    WHERE teamMemberID = input_tm_id;
+
+END //
+
+DELIMITER ;
+
 -- ---------------------------------------
--- DELETE Schedule row
+-- DELETE TeamMembers Row
+-- ----------------------------------------
+
+DROP PROCEDURE IF EXISTS sp_delete_team_member;
+
+DELIMITER //
+
+CREATE PROCEDURE sp_delete_team_member(IN input_tm_id INT)
+BEGIN
+
+    DELETE FROM TeamMembers
+    WHERE teamMemberID = input_tm_id;
+
+END //
+
+DELIMITER ;
+
+-- ---------------------------------------
+-- DELETE Schedule Row
 -- ---------------------------------------
 
 DROP PROCEDURE IF EXISTS sp_delete_schedule;
