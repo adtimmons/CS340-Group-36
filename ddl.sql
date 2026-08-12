@@ -89,11 +89,11 @@ VALUES
 INSERT INTO TeamMembers
    (teamMemberID, firstName, lastName, homeLineID, employmentStatus)
 VALUES
-   (1, 'John', 'Smith', 1, 'Full-Time'),
-   (2, 'Sarah', 'Johnson', 1, 'Full-Time'),
-   (3, 'Michael', 'Davis', 2, 'Full-Time'),
-   (4, 'Emily', 'Brown', 3, 'Full-Time'),
-   (5, 'David', 'Wilson', 4, 'Full-Time');
+   (1, 'John', 'Smith', 1, 'Active'),
+   (2, 'Sarah', 'Johnson', 1, 'Active'),
+   (3, 'Michael', 'Davis', 2, 'Active'),
+   (4, 'Emily', 'Brown', 3, 'Active'),
+   (5, 'David', 'Wilson', 4, 'Active');
  
  
 INSERT INTO Skills
