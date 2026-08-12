@@ -1,5 +1,6 @@
 -- PL SQL for Group 36
 -- Alysha Timmons and Jason Bluedorn
+-- CITATION: All procedures based off of example code given in OSU CS_340 Explorations
 
 -- -----------------------------------------------------------------------------------------------
 -- Reset Procedure
@@ -7,7 +8,7 @@
 
 DROP PROCEDURE IF EXISTS sp_db_reset;
 
-DELIMITER //
+DELIMITER / /
 
 CREATE PROCEDURE sp_db_reset()
 
@@ -165,7 +166,7 @@ BEGIN
     COMMIT;
 END //
 
-DELIMITER ;
+DELIMITER;
 
 -- ----------------------------------------------------------------------------------------------
 -- LINES CUD FUNCTIONALITY
@@ -177,7 +178,7 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_create_assembly_line;
 
-DELIMITER //
+DELIMITER / /
 
 CREATE PROCEDURE sp_create_assembly_line(
     IN input_line_name VARCHAR(255),
@@ -195,7 +196,7 @@ BEGIN
 
 END //
 
-DELIMITER ;
+DELIMITER;
 
 -- ------------------------------------------------
 -- UPDATE Lines Row
@@ -203,7 +204,7 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_update_assembly_line;
 
-DELIMITER //
+DELIMITER / /
 
 CREATE PROCEDURE sp_update_assembly_line(
     IN input_line_id INT,
@@ -218,7 +219,7 @@ BEGIN
 
 END //
 
-DELIMITER ;
+DELIMITER;
 
 -- -----------------------------------------
 -- DELETE Lines Row
@@ -226,7 +227,7 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_delete_assembly_line;
 
-DELIMITER //
+DELIMITER / /
 
 CREATE PROCEDURE sp_delete_assembly_line(IN input_line_id INT)
 BEGIN
@@ -236,7 +237,7 @@ BEGIN
 
 END //
 
-DELIMITER ;
+DELIMITER;
 
 -- ----------------------------------------------------------------------------------------------
 -- TEAM MEMBERS CUD FUNCTIONALITY
@@ -248,7 +249,7 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_create_team_member;
 
-DELIMITER //
+DELIMITER / /
 
 CREATE PROCEDURE sp_create_team_member(
     IN input_first_name VARCHAR(255),
@@ -268,7 +269,7 @@ BEGIN
 
 END //
 
-DELIMITER ;
+DELIMITER;
 
 -- -----------------------------------------
 -- UPDATE TeamMember Row
@@ -276,7 +277,7 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_update_team_member;
 
-DELIMITER //
+DELIMITER / /
 
 CREATE PROCEDURE sp_update_team_member(
     IN input_tm_id INT,
@@ -294,7 +295,7 @@ BEGIN
 
 END //
 
-DELIMITER ;
+DELIMITER;
 
 -- ---------------------------------------
 -- DELETE TeamMembers Row
@@ -302,13 +303,262 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS sp_delete_team_member;
 
-DELIMITER //
+DELIMITER / /
 
 CREATE PROCEDURE sp_delete_team_member(IN input_tm_id INT)
 BEGIN
 
     DELETE FROM TeamMembers
     WHERE teamMemberID = input_tm_id;
+
+END //
+
+DELIMITER;
+
+-- ----------------------------------------------------------------------------------------------
+-- POSITIONS CUD FUNCTIONALITY
+-- ----------------------------------------------------------------------------------------------
+
+-------------------------------------------
+-- CREATE Positions Row
+-------------------------------------------
+
+DROP PROCEDURE IF EXISTS sp_create_position;
+
+DELIMITER //
+
+CREATE PROCEDURE sp_create_position(
+    IN input_position_name VARCHAR(255),
+    IN input_line_id INT,
+    IN input_req_staff INT,
+    IN input_skill_id INT,
+    OUT position_id INT
+)
+BEGIN
+
+    INSERT INTO Positions (positionName, lineID, requiredStaff, qualifyingSkillID)
+    VALUES (input_position_name, input_line_id, input_req_staff, input_skill_id);
+
+    -- get ID for output
+    SELECT LAST_INSERT_ID() INTO position_id;
+    SELECT LAST_INSERT_ID() AS 'position_id';
+
+
+END //
+
+DELIMITER ;
+
+-- ----------------------------------------
+-- UPDATE Position Row
+-- ----------------------------------------
+
+DROP PROCEDURE IF EXISTS sp_update_position;
+
+DELIMITER //
+
+CREATE PROCEDURE sp_update_position(
+    IN input_position_id INT,
+    IN input_position_name VARCHAR(255),
+    IN input_line_id INT,
+    IN input_req_staff INT,
+    IN input_skill_id INT
+)
+BEGIN
+
+    UPDATE Positions
+    SET positionName = input_position_name, lineID = input_line_id,
+        requiredStaff = input_req_staff, qualifyingSkillID = input_skill_id
+    WHERE positionID = input_position_id;
+
+END //
+
+DELIMITER ;
+
+-- ----------------------------------------
+-- DELETE Position Row
+-- ----------------------------------------
+
+DROP PROCEDURE IF EXISTS sp_delete_position;
+
+DELIMITER //
+
+CREATE PROCEDURE sp_delete_position(IN input_position_id INT)
+BEGIN
+
+    DELETE FROM Positions
+    WHERE positionID = input_position_id;
+
+END //
+
+DELIMITER ;
+
+-- ----------------------------------------------------------------------------------------------
+-- SKILLS CUD FUNCTIONALITY
+-- ----------------------------------------------------------------------------------------------
+
+-------------------------------------------
+-- CREATE Skill Row
+-------------------------------------------
+
+DROP PROCEDURE IF EXISTS sp_create_skill;
+
+DELIMITER //
+
+CREATE PROCEDURE sp_create_skill(
+    IN input_skill_name VARCHAR(255),
+    IN input_skill_description VARCHAR(255),
+    OUT skill_id INT
+)
+BEGIN
+
+    INSERT INTO Skills (skillName, skillDescription)
+    Values (input_skill_name, input_skill_description);
+
+    -- get ID for output
+    SELECT LAST_INSERT_ID() INTO skill_id;
+    SELECT LAST_INSERT_ID() AS 'skill_id';
+
+
+END //
+
+DELIMITER ;
+
+-- ----------------------------------------
+-- UPDATE Skill Row
+-- ----------------------------------------
+
+DROP PROCEDURE IF EXISTS sp_update_skill;
+
+DELIMITER //
+
+CREATE PROCEDURE sp_update_skill(
+    IN input_skill_id INT,
+    IN input_skill_name VARCHAR(255),
+    IN input_skill_description VARCHAR(255)
+)
+BEGIN
+
+    UPDATE Skills
+    SET skillName = input_skill_name, skillDescription = input_skill_description
+    WHERE skillID = input_skill_id;
+
+END //
+
+DELIMITER ;
+
+-- ---------------------------------------
+-- DELETE Skill Row
+-- ---------------------------------------
+
+DROP PROCEDURE IF EXISTS sp_delete_skill;
+
+DELIMITER //
+
+CREATE PROCEDURE sp_delete_skill(IN input_skill_id INT)
+BEGIN
+
+    DELETE FROM Skills
+    WHERE skillID = input_skill_id;
+
+END //
+
+DELIMITER ;
+
+-- ----------------------------------------------------------------------------------------------
+-- TEAM MEMBER SKILLS CUD FUNCTIONALITY
+-- ----------------------------------------------------------------------------------------------
+
+-------------------------------------------
+-- CREATE TeamMemberSkill Row
+-------------------------------------------
+
+DROP PROCEDURE IF EXISTS sp_create_tm_skill;
+
+DELIMITER //
+
+CREATE PROCEDURE sp_create_tm_skill(
+    IN input_tm_id INT,
+    IN input_skill_id INT
+)
+BEGIN
+
+    INSERT INTO TeamMemberSkills (teamMemberID, skillID)
+    VALUES (input_tm_id, input_skill_id);
+
+    -- cannot return PK because it is composite primary key
+
+END //
+
+DELIMITER ;
+
+-- ----------------------------------------
+-- DELETE TeamMemberSkill Row
+-- ----------------------------------------
+
+DROP PROCEDURE IF EXISTS sp_delete_tm_skill;
+
+DELIMITER //
+
+CREATE PROCEDURE sp_delete_tm_skill(IN input_tm_id INT, IN input_skill_id INT)
+BEGIN
+
+    -- delete needs to include both tm id and skill id in order to only delete intended row
+    DELETE FROM TeamMemberSkills
+    WHERE teamMemberID = input_tm_id AND skillID = input_skill_id;
+
+END //
+
+DELIMITER ;
+
+-- ----------------------------------------------------------------------------------------------
+-- SCHEDULES CUD FUNCTIONALITY
+-- ----------------------------------------------------------------------------------------------
+
+-------------------------------------------
+-- CREATE Schedule Row
+-------------------------------------------
+
+DROP PROCEDURE IF EXISTS sp_create_schedule;
+
+DELIMITER //
+
+CREATE PROCEDURE sp_create_schedule(
+    IN input_schedule_date DATE,
+    IN input_shift_name VARCHAR(255),
+    OUT schedule_id INT
+)
+BEGIN
+
+    INSERT INTO Schedules (scheduleDate, shiftName)
+    Values (input_schedule_date, input_shift_name);
+
+    -- get ID for output
+    SELECT LAST_INSERT_ID() INTO schedule_id;
+    SELECT LAST_INSERT_ID() AS 'schedule_id';
+
+
+END //
+
+DELIMITER ;
+
+-- ---------------------------------------
+-- UPDATE Schedule Row
+-- ---------------------------------------
+
+DROP PROCEDURE IF EXISTS sp_update_schedule;
+
+DELIMITER //
+
+CREATE PROCEDURE sp_update_schedule(
+    IN input_schedule_id INT,
+    IN input_schedule_date DATE,
+    IN input_shift_name VARCHAR(255)
+)
+BEGIN
+
+    UPDATE Schedules
+    SET scheduleDate = input_schedule_date, shiftName = input_shift_name
+    WHERE scheduleID = input_schedule_id;
 
 END //
 
@@ -322,10 +572,83 @@ DROP PROCEDURE IF EXISTS sp_delete_schedule;
 
 DELIMITER //
 
-CREATE PROCEDURE sp_delete_schedule(IN input_ID INT)
+CREATE PROCEDURE sp_delete_schedule(IN input_schedule_id INT)
 BEGIN
 
-    DELETE FROM Schedules WHERE scheduleID = input_ID;
+    DELETE FROM Schedules WHERE scheduleID = input_schedule_id;
+
+END //
+
+DELIMITER ;
+
+-- ----------------------------------------------------------------------------------------------
+-- DAILY ASSIGNMENTS CUD FUNCTIONALITY
+-- ----------------------------------------------------------------------------------------------
+
+-------------------------------------------
+-- CREATE DailyAssignment Row
+-------------------------------------------
+
+DROP PROCEDURE IF EXISTS sp_create_daily_assignment;
+
+DELIMITER //
+
+CREATE PROCEDURE sp_create_daily_assignment(
+    IN input_schedule_id INT,
+    IN input_tm_id INT,
+    IN input_position_id INT,
+    OUT assignment_id INT
+)
+BEGIN
+
+    INSERT INTO DailyAssignments (scheduleID, teamMemberID, positionID)
+    VALUES (input_schedule_id, input_tm_id, input_position_id);
+
+    -- get ID for output
+    SELECT LAST_INSERT_ID() INTO assignment_id;
+    SELECT LAST_INSERT_ID() AS 'assignment_id';
+
+
+END //
+
+DELIMITER ;
+
+-- ---------------------------------------
+-- UPDATE DailyAssignment Row
+-- ---------------------------------------
+
+DROP PROCEDURE IF EXISTS sp_update_daily_assignment;
+
+DELIMITER //
+
+CREATE PROCEDURE sp_update_daily_assignment(
+    IN input_assignment_id INT,
+    IN input_schedule_id INT,
+    IN input_tm_id INT,
+    IN input_position_id INT
+)
+BEGIN
+
+    UPDATE DailyAssignments
+    SET scheduleID = input_schedule_id, teamMemberID = input_tm_id, positionID = input_position_id
+    WHERE assignmentID = input_assignment_id;
+
+END //
+
+DELIMITER ;
+
+-- ---------------------------------------
+-- DELETE DailyAssignment Row
+-- ---------------------------------------
+
+DROP PROCEDURE IF EXISTS sp_delete_daily_assignment;
+
+DELIMITER //
+
+CREATE PROCEDURE sp_delete_daily_assignment(IN input_assignment_id INT)
+BEGIN
+
+    DELETE FROM DailyAssignments WHERE assignmentID = input_assignment_id;
 
 END //
 
