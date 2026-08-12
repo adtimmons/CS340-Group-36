@@ -25,8 +25,41 @@ app.use(express.static(path.join(__dirname, "public")));
 app.use(express.urlencoded({ extended: true }));
 
 // Pages.
-app.get("/", (req, res) => {
-  res.render("index", { title: "Home" });
+app.get("/", async (req, res) => {
+  try {
+    const [teamMembersResult] = await db.query(`
+      SELECT COUNT(*) AS count
+      FROM TeamMembers
+      WHERE employmentStatus = 'Active';
+    `);
+
+    const [linesResult] = await db.query(`
+      SELECT COUNT(*) AS count
+      FROM AssemblyLines;
+    `);
+
+    const [positionsResult] = await db.query(`
+      SELECT COUNT(*) AS count
+      FROM Positions;
+    `);
+
+    const [schedulesResult] = await db.query(`
+      SELECT COUNT(*) AS count
+      FROM Schedules;
+    `);
+
+    res.render("index", {
+      title: "Home",
+      teamMemberCount: teamMembersResult[0].count,
+      lineCount: linesResult[0].count,
+      positionCount: positionsResult[0].count,
+      scheduleCount: schedulesResult[0].count
+    });
+
+  } catch (error) {
+    console.error("Error loading dashboard:", error);
+    res.status(500).send("Unable to load dashboard.");
+  }
 });
 
 app.get("/lines", async (req, res) => {
@@ -623,7 +656,7 @@ app.get("/schedules", async (req, res) => {
     const schedulesQuery = `
       SELECT
         scheduleID,
-        scheduleDate,
+        DATE_FORMAT(scheduleDate, '%m/%d/%Y') AS scheduleDate,
         shiftName
       FROM Schedules
       ORDER BY scheduleDate, shiftName;
@@ -767,7 +800,7 @@ app.get("/daily-assignments", async (req, res) => {
     const assignmentsQuery = `
       SELECT
         DailyAssignments.assignmentID,
-        Schedules.scheduleDate,
+        DATE_FORMAT(Schedules.scheduleDate, '%m/%d/%Y') AS scheduleDate,
         Schedules.shiftName,
         CONCAT(TeamMembers.firstName, ' ', TeamMembers.lastName) AS teamMemberName,
         Positions.positionName
