@@ -23,13 +23,31 @@
                 <td>{{this.lineName}}</td>
                 <td>{{this.department}}</td>
                 <td>
-                    <button type="button">Edit</button>
-                    <button type="button" class="danger">Delete</button>
+                    <form
+                        action="/lines/delete"
+                        method="POST"
+                        style="display:inline;"
+                    >
+                        <input
+                            type="hidden"
+                            name="lineID"
+                            value="{{this.lineID}}"
+                        >
+
+                        <button
+                            type="submit"
+                            class="danger"
+                            onclick="return confirm('Delete this line?');"
+                        >
+                            Delete
+                        </button>
+                    </form>
                 </td>
             </tr>
+
             {{else}}
             <tr>
-                <td colspan="4">No assembly lines found.</td>
+                <td colspan="4">No lines found.</td>
             </tr>
             {{/each}}
         </tbody>
@@ -40,7 +58,8 @@
     <h3>Add a Line</h3>
 
     <form action="/lines/add" method="POST">
-        <label for="lineName">Line Name</label>
+
+        <label for="lineName">Line name</label>
         <input
             type="text"
             id="lineName"
@@ -56,6 +75,59 @@
             required
         >
 
-        <button type="submit">Add Line</button>
+        <button type="submit">
+            Add Line
+        </button>
+    </form>
+</section>
+
+<section class="panel">
+    <h3>Update a Line</h3>
+
+    <form action="/lines/update" method="POST">
+
+        <label for="updateLineID">
+            Line
+        </label>
+
+        <select
+            id="updateLineID"
+            name="lineID"
+            required
+        >
+            <option value="">Select a Line</option>
+
+            {{#each lines}}
+            <option value="{{this.lineID}}">
+                {{this.lineName}}
+            </option>
+            {{/each}}
+        </select>
+
+        <label for="updateLineName">
+            Line name
+        </label>
+
+        <input
+            type="text"
+            id="updateLineName"
+            name="lineName"
+            required
+        >
+
+        <label for="updateDepartment">
+            Department
+        </label>
+
+        <input
+            type="text"
+            id="updateDepartment"
+            name="department"
+            required
+        >
+
+        <button type="submit">
+            Update Line
+        </button>
     </form>
 </section>

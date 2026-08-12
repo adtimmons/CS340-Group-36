@@ -8,7 +8,7 @@
 
 DROP PROCEDURE IF EXISTS sp_db_reset;
 
-DELIMITER / /
+DELIMITER //
 
 CREATE PROCEDURE sp_db_reset()
 
@@ -166,7 +166,7 @@ BEGIN
     COMMIT;
 END //
 
-DELIMITER;
+DELIMITER ;
 
 -- ----------------------------------------------------------------------------------------------
 -- LINES CUD FUNCTIONALITY
@@ -178,7 +178,7 @@ DELIMITER;
 
 DROP PROCEDURE IF EXISTS sp_create_assembly_line;
 
-DELIMITER / /
+DELIMITER //
 
 CREATE PROCEDURE sp_create_assembly_line(
     IN input_line_name VARCHAR(255),
@@ -196,7 +196,7 @@ BEGIN
 
 END //
 
-DELIMITER;
+DELIMITER ;
 
 -- ------------------------------------------------
 -- UPDATE Lines Row
@@ -204,7 +204,7 @@ DELIMITER;
 
 DROP PROCEDURE IF EXISTS sp_update_assembly_line;
 
-DELIMITER / /
+DELIMITER //
 
 CREATE PROCEDURE sp_update_assembly_line(
     IN input_line_id INT,
@@ -219,7 +219,7 @@ BEGIN
 
 END //
 
-DELIMITER;
+DELIMITER ;
 
 -- -----------------------------------------
 -- DELETE Lines Row
@@ -227,7 +227,7 @@ DELIMITER;
 
 DROP PROCEDURE IF EXISTS sp_delete_assembly_line;
 
-DELIMITER / /
+DELIMITER //
 
 CREATE PROCEDURE sp_delete_assembly_line(IN input_line_id INT)
 BEGIN
@@ -237,7 +237,7 @@ BEGIN
 
 END //
 
-DELIMITER;
+DELIMITER ;
 
 -- ----------------------------------------------------------------------------------------------
 -- TEAM MEMBERS CUD FUNCTIONALITY
@@ -249,7 +249,7 @@ DELIMITER;
 
 DROP PROCEDURE IF EXISTS sp_create_team_member;
 
-DELIMITER / /
+DELIMITER //
 
 CREATE PROCEDURE sp_create_team_member(
     IN input_first_name VARCHAR(255),
@@ -269,7 +269,7 @@ BEGIN
 
 END //
 
-DELIMITER;
+DELIMITER ;
 
 -- -----------------------------------------
 -- UPDATE TeamMember Row
@@ -277,7 +277,7 @@ DELIMITER;
 
 DROP PROCEDURE IF EXISTS sp_update_team_member;
 
-DELIMITER / /
+DELIMITER //
 
 CREATE PROCEDURE sp_update_team_member(
     IN input_tm_id INT,
@@ -295,7 +295,7 @@ BEGIN
 
 END //
 
-DELIMITER;
+DELIMITER ;
 
 -- ---------------------------------------
 -- DELETE TeamMembers Row
@@ -303,7 +303,7 @@ DELIMITER;
 
 DROP PROCEDURE IF EXISTS sp_delete_team_member;
 
-DELIMITER / /
+DELIMITER //
 
 CREATE PROCEDURE sp_delete_team_member(IN input_tm_id INT)
 BEGIN
@@ -313,7 +313,7 @@ BEGIN
 
 END //
 
-DELIMITER;
+DELIMITER ;
 
 -- ----------------------------------------------------------------------------------------------
 -- POSITIONS CUD FUNCTIONALITY
@@ -505,6 +505,34 @@ BEGIN
     -- delete needs to include both tm id and skill id in order to only delete intended row
     DELETE FROM TeamMemberSkills
     WHERE teamMemberID = input_tm_id AND skillID = input_skill_id;
+
+END //
+
+DELIMITER ;
+
+-- ----------------------------------------
+-- UPDATE TeamMemberSkill Row
+-- ----------------------------------------
+
+DROP PROCEDURE IF EXISTS sp_update_tm_skill;
+
+DELIMITER //
+
+CREATE PROCEDURE sp_update_tm_skill(
+    IN input_old_tm_id INT,
+    IN input_old_skill_id INT,
+    IN input_new_tm_id INT,
+    IN input_new_skill_id INT
+)
+BEGIN
+
+    UPDATE TeamMemberSkills
+    SET
+        teamMemberID = input_new_tm_id,
+        skillID = input_new_skill_id
+    WHERE
+        teamMemberID = input_old_tm_id
+        AND skillID = input_old_skill_id;
 
 END //
 

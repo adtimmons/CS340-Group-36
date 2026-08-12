@@ -1,16 +1,16 @@
 <section class="page-heading">
     <h2>Daily Assignments</h2>
-    <p>Assign team members to positions for each production schedule.</p>
+    <p>Manage team member assignments for scheduled production shifts.</p>
 </section>
 
 <section class="panel">
-    <h3>Current Daily Assignments</h3>
+    <h3>Existing Daily Assignments</h3>
 
     <table>
         <thead>
             <tr>
                 <th>Assignment ID</th>
-                <th>Date</th>
+                <th>Schedule</th>
                 <th>Shift</th>
                 <th>Team Member</th>
                 <th>Position</th>
@@ -27,13 +27,31 @@
                 <td>{{this.teamMemberName}}</td>
                 <td>{{this.positionName}}</td>
                 <td>
-                    <button type="button">Edit</button>
-                    <button type="button" class="danger">Delete</button>
+                    <form
+                        action="/daily-assignments/delete"
+                        method="POST"
+                        style="display:inline;"
+                    >
+                        <input
+                            type="hidden"
+                            name="assignmentID"
+                            value="{{this.assignmentID}}"
+                        >
+
+                        <button
+                            type="submit"
+                            class="danger"
+                            onclick="return confirm('Delete this assignment?');"
+                        >
+                            Delete
+                        </button>
+                    </form>
                 </td>
             </tr>
+
             {{else}}
             <tr>
-                <td colspan="6">No daily assignments found.</td>
+                <td colspan="6">No assignments found.</td>
             </tr>
             {{/each}}
         </tbody>
@@ -47,7 +65,7 @@
 
         <label for="scheduleID">Schedule</label>
         <select id="scheduleID" name="scheduleID" required>
-            <option value="">Select a Schedule</option>
+            <option value="">Select a schedule</option>
 
             {{#each schedules}}
             <option value="{{this.scheduleID}}">
@@ -58,7 +76,7 @@
 
         <label for="teamMemberID">Team Member</label>
         <select id="teamMemberID" name="teamMemberID" required>
-            <option value="">Select a Team Member</option>
+            <option value="">Select a team member</option>
 
             {{#each teamMembers}}
             <option value="{{this.teamMemberID}}">
@@ -69,7 +87,7 @@
 
         <label for="positionID">Position</label>
         <select id="positionID" name="positionID" required>
-            <option value="">Select a Position</option>
+            <option value="">Select a position</option>
 
             {{#each positions}}
             <option value="{{this.positionID}}">
@@ -81,6 +99,78 @@
         <button type="submit">
             Add Assignment
         </button>
+    </form>
+</section>
 
+<section class="panel">
+    <h3>Update a Daily Assignment</h3>
+
+    <form action="/daily-assignments/update" method="POST">
+
+        <label for="updateAssignmentID">Assignment</label>
+        <select
+            id="updateAssignmentID"
+            name="assignmentID"
+            required
+        >
+            <option value="">Select an assignment</option>
+
+            {{#each dailyAssignments}}
+            <option value="{{this.assignmentID}}">
+                Assignment {{this.assignmentID}} -
+                {{this.teamMemberName}} -
+                {{this.positionName}}
+            </option>
+            {{/each}}
+        </select>
+
+        <label for="updateScheduleID">Schedule</label>
+        <select
+            id="updateScheduleID"
+            name="scheduleID"
+            required
+        >
+            <option value="">Select a schedule</option>
+
+            {{#each schedules}}
+            <option value="{{this.scheduleID}}">
+                {{this.scheduleDate}} - {{this.shiftName}}
+            </option>
+            {{/each}}
+        </select>
+
+        <label for="updateTeamMemberID">Team Member</label>
+        <select
+            id="updateTeamMemberID"
+            name="teamMemberID"
+            required
+        >
+            <option value="">Select a team member</option>
+
+            {{#each teamMembers}}
+            <option value="{{this.teamMemberID}}">
+                {{this.teamMemberName}}
+            </option>
+            {{/each}}
+        </select>
+
+        <label for="updatePositionID">Position</label>
+        <select
+            id="updatePositionID"
+            name="positionID"
+            required
+        >
+            <option value="">Select a position</option>
+
+            {{#each positions}}
+            <option value="{{this.positionID}}">
+                {{this.positionName}}
+            </option>
+            {{/each}}
+        </select>
+
+        <button type="submit">
+            Update Assignment
+        </button>
     </form>
 </section>

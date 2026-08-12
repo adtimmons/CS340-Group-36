@@ -27,10 +27,28 @@
                 <td>{{this.lineName}}</td>
                 <td>{{this.employmentStatus}}</td>
                 <td>
-                    <button type="button">Edit</button>
-                    <button type="button" class="danger">Delete</button>
+                    <form
+                        action="/team-members/delete"
+                        method="POST"
+                        style="display:inline;"
+                    >
+                        <input
+                            type="hidden"
+                            name="teamMemberID"
+                            value="{{this.teamMemberID}}"
+                        >
+
+                        <button
+                            type="submit"
+                            class="danger"
+                            onclick="return confirm('Delete this team member?');"
+                        >
+                            Delete
+                        </button>
+                    </form>
                 </td>
             </tr>
+
             {{else}}
             <tr>
                 <td colspan="6">No team members found.</td>
@@ -44,6 +62,7 @@
     <h3>Add a Team Member</h3>
 
     <form action="/team-members/add" method="POST">
+
         <label for="firstName">First name</label>
         <input
             type="text"
@@ -72,13 +91,94 @@
         </select>
 
         <label for="employmentStatus">Employment status</label>
-        <select id="employmentStatus" name="employmentStatus" required>
+        <select
+            id="employmentStatus"
+            name="employmentStatus"
+            required
+        >
             <option value="">Select a status</option>
             <option value="Active">Active</option>
             <option value="Leave">Leave</option>
             <option value="Inactive">Inactive</option>
         </select>
 
-        <button type="submit">Add Team Member</button>
+        <button type="submit">
+            Add Team Member
+        </button>
+    </form>
+</section>
+
+<section class="panel">
+    <h3>Update a Team Member</h3>
+
+    <form action="/team-members/update" method="POST">
+
+        <label for="updateTeamMemberID">
+            Team Member
+        </label>
+
+        <select
+            id="updateTeamMemberID"
+            name="teamMemberID"
+            required
+        >
+            <option value="">Select a Team Member</option>
+
+            {{#each teamMembers}}
+            <option value="{{this.teamMemberID}}">
+                {{this.firstName}} {{this.lastName}}
+            </option>
+            {{/each}}
+        </select>
+
+        <label for="updateFirstName">First name</label>
+        <input
+            type="text"
+            id="updateFirstName"
+            name="firstName"
+            required
+        >
+
+        <label for="updateLastName">Last name</label>
+        <input
+            type="text"
+            id="updateLastName"
+            name="lastName"
+            required
+        >
+
+        <label for="updateHomeLineID">Home line</label>
+        <select
+            id="updateHomeLineID"
+            name="homeLineID"
+            required
+        >
+            <option value="">Select a line</option>
+
+            {{#each lines}}
+            <option value="{{this.lineID}}">
+                {{this.lineName}}
+            </option>
+            {{/each}}
+        </select>
+
+        <label for="updateEmploymentStatus">
+            Employment status
+        </label>
+
+        <select
+            id="updateEmploymentStatus"
+            name="employmentStatus"
+            required
+        >
+            <option value="">Select a status</option>
+            <option value="Active">Active</option>
+            <option value="Leave">Leave</option>
+            <option value="Inactive">Inactive</option>
+        </select>
+
+        <button type="submit">
+            Update Team Member
+        </button>
     </form>
 </section>

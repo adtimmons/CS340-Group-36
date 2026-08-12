@@ -1,6 +1,6 @@
 <section class="page-heading">
     <h2>Schedules</h2>
-    <p>Manage production schedules.</p>
+    <p>Manage production schedules and shifts.</p>
 </section>
 
 <section class="panel">
@@ -23,8 +23,11 @@
                 <td>{{this.scheduleDate}}</td>
                 <td>{{this.shiftName}}</td>
                 <td>
-                    <button type="button">Edit</button>
-                    <form action="/schedules/delete" method="POST" style="display: inline;">
+                    <form
+                        action="/schedules/delete"
+                        method="POST"
+                        style="display:inline;"
+                    >
                         <input
                             type="hidden"
                             name="scheduleID"
@@ -41,6 +44,7 @@
                     </form>
                 </td>
             </tr>
+
             {{else}}
             <tr>
                 <td colspan="4">No schedules found.</td>
@@ -64,16 +68,72 @@
         >
 
         <label for="shiftName">Shift</label>
-        <select id="shiftName" name="shiftName" required>
-            <option value="">Select a Shift</option>
-            <option value="1st Shift">1st Shift</option>
-            <option value="2nd Shift">2nd Shift</option>
-            <option value="3rd Shift">3rd Shift</option>
+        <select
+            id="shiftName"
+            name="shiftName"
+            required
+        >
+            <option value="">Select a shift</option>
+            <option value="Day">Day</option>
+            <option value="Night">Night</option>
         </select>
 
         <button type="submit">
             Add Schedule
         </button>
+    </form>
+</section>
 
+<section class="panel">
+    <h3>Update a Schedule</h3>
+
+    <form action="/schedules/update" method="POST">
+
+        <label for="updateScheduleID">
+            Schedule
+        </label>
+
+        <select
+            id="updateScheduleID"
+            name="scheduleID"
+            required
+        >
+            <option value="">Select a schedule</option>
+
+            {{#each schedules}}
+            <option value="{{this.scheduleID}}">
+                {{this.scheduleID}} - {{this.scheduleDate}} - {{this.shiftName}}
+            </option>
+            {{/each}}
+        </select>
+
+        <label for="updateScheduleDate">
+            Date
+        </label>
+
+        <input
+            type="date"
+            id="updateScheduleDate"
+            name="scheduleDate"
+            required
+        >
+
+        <label for="updateShiftName">
+            Shift
+        </label>
+
+        <select
+            id="updateShiftName"
+            name="shiftName"
+            required
+        >
+            <option value="">Select a shift</option>
+            <option value="Day">Day</option>
+            <option value="Night">Night</option>
+        </select>
+
+        <button type="submit">
+            Update Schedule
+        </button>
     </form>
 </section>

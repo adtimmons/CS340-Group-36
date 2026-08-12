@@ -1,6 +1,6 @@
 <section class="page-heading">
     <h2>Team Member Skills</h2>
-    <p>Assign skills to team members.</p>
+    <p>Assign, update, and remove skills for team members.</p>
 </section>
 
 <section class="panel">
@@ -21,9 +21,34 @@
                 <td>{{this.teamMemberName}}</td>
                 <td>{{this.skillName}}</td>
                 <td>
-                    <button type="button">Delete</button>
+                    <form
+                        action="/team-member-skills/delete"
+                        method="POST"
+                        style="display:inline;"
+                    >
+                        <input
+                            type="hidden"
+                            name="teamMemberID"
+                            value="{{this.teamMemberID}}"
+                        >
+
+                        <input
+                            type="hidden"
+                            name="skillID"
+                            value="{{this.skillID}}"
+                        >
+
+                        <button
+                            type="submit"
+                            class="danger"
+                            onclick="return confirm('Remove this skill assignment?');"
+                        >
+                            Delete
+                        </button>
+                    </form>
                 </td>
             </tr>
+
             {{else}}
             <tr>
                 <td colspan="3">No assignments found.</td>
@@ -62,6 +87,74 @@
 
         <button type="submit">
             Assign Skill
+        </button>
+
+    </form>
+</section>
+
+<section class="panel">
+    <h3>Update a Skill Assignment</h3>
+
+    <form action="/team-member-skills/update" method="POST">
+
+        <label for="oldAssignment">
+            Current Assignment
+        </label>
+
+        <select id="oldAssignment" name="oldAssignment" required>
+            <option value="">
+                Select an Assignment
+            </option>
+
+            {{#each teamMemberSkills}}
+            <option value="{{this.teamMemberID}},{{this.skillID}}">
+                {{this.teamMemberName}} - {{this.skillName}}
+            </option>
+            {{/each}}
+        </select>
+
+        <label for="newTeamMemberID">
+            New Team Member
+        </label>
+
+        <select
+            id="newTeamMemberID"
+            name="newTeamMemberID"
+            required
+        >
+            <option value="">
+                Select a Team Member
+            </option>
+
+            {{#each teamMembers}}
+            <option value="{{this.teamMemberID}}">
+                {{this.teamMemberName}}
+            </option>
+            {{/each}}
+        </select>
+
+        <label for="newSkillID">
+            New Skill
+        </label>
+
+        <select
+            id="newSkillID"
+            name="newSkillID"
+            required
+        >
+            <option value="">
+                Select a Skill
+            </option>
+
+            {{#each skills}}
+            <option value="{{this.skillID}}">
+                {{this.skillName}}
+            </option>
+            {{/each}}
+        </select>
+
+        <button type="submit">
+            Update Assignment
         </button>
 
     </form>

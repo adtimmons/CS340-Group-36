@@ -23,10 +23,28 @@
                 <td>{{this.skillName}}</td>
                 <td>{{this.skillDescription}}</td>
                 <td>
-                    <button type="button">Edit</button>
-                    <button type="button" class="danger">Delete</button>
+                    <form
+                        action="/skills/delete"
+                        method="POST"
+                        style="display:inline;"
+                    >
+                        <input
+                            type="hidden"
+                            name="skillID"
+                            value="{{this.skillID}}"
+                        >
+
+                        <button
+                            type="submit"
+                            class="danger"
+                            onclick="return confirm('Delete this skill?');"
+                        >
+                            Delete
+                        </button>
+                    </form>
                 </td>
             </tr>
+
             {{else}}
             <tr>
                 <td colspan="4">No skills found.</td>
@@ -40,6 +58,7 @@
     <h3>Add a Skill</h3>
 
     <form action="/skills/add" method="POST">
+
         <label for="skillName">Skill name</label>
         <input
             type="text"
@@ -55,6 +74,58 @@
             rows="4"
         ></textarea>
 
-        <button type="submit">Add Skill</button>
+        <button type="submit">
+            Add Skill
+        </button>
+    </form>
+</section>
+
+<section class="panel">
+    <h3>Update a Skill</h3>
+
+    <form action="/skills/update" method="POST">
+
+        <label for="updateSkillID">
+            Skill
+        </label>
+
+        <select
+            id="updateSkillID"
+            name="skillID"
+            required
+        >
+            <option value="">Select a Skill</option>
+
+            {{#each skills}}
+            <option value="{{this.skillID}}">
+                {{this.skillName}}
+            </option>
+            {{/each}}
+        </select>
+
+        <label for="updateSkillName">
+            Skill name
+        </label>
+
+        <input
+            type="text"
+            id="updateSkillName"
+            name="skillName"
+            required
+        >
+
+        <label for="updateSkillDescription">
+            Skill description
+        </label>
+
+        <textarea
+            id="updateSkillDescription"
+            name="skillDescription"
+            rows="4"
+        ></textarea>
+
+        <button type="submit">
+            Update Skill
+        </button>
     </form>
 </section>
