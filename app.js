@@ -279,7 +279,7 @@ app.get("/positions", async (req, res) => {
         ON Positions.lineID = AssemblyLines.lineID
       INNER JOIN Skills
         ON Positions.qualifyingSkillID = Skills.skillID
-      ORDER BY Positions.positionID;
+      ORDER BY AssemblyLines.lineID, Positions.positionID;
     `;
 
     const linesQuery = `
